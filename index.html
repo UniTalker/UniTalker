@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>UniTalker</title>
+		<link type="text/css" href="./css/basic.css" rel="stylesheet">
+		<link type="text/css" href="./css/index.css" rel="stylesheet">
+		<link type="text/css" href="./css/bootstrap.min.css" rel="stylesheet">
+		<script type='text/javascript' src="./js/jquery-3.3.1.min.js"></script>
+	</head>
+	<body>
+		<div class="main">
+			<div class="title" style="display: flex;
+									  align-items: center;
+									  justify-content: center;
+									  width: 100%;
+									  margin: 0 auto;">
+			    <div><img src="img/logo.png" style="width: 5rem; height: 7.5rem; margin-right: 1rem;" alt="Agent Image"/></div>
+			    <div style="z-index: 2; color: white;">
+					UniTalker: Conversational Speech-Visual Synthesis
+				</div>
+			</div>
+			<div class="content">
+				<div class="section author">
+					<span>
+						Anonymous Authors
+					</span>
+				</div>
+				
+				<!-- <div class="section toc">
+					<div class="section-title">LIST</div>
+					<div class="section-content">
+						<ul>
+							<li><a href="#abstract">1. ABSTRACT</a></li>
+							<li><a href="#method">2. METHOD</a></li>
+							<li>
+								<a href="#experiments">3. EXPERIMENTS</a>
+								<ul>
+									<li><a href="#exp-1" style="padding-left: 2rem;">3.1 UniTalker Evaluation</a></li>
+									<li><a href="#exp-2" style="padding-left: 2rem;">3.2 Ablation Experiment</a></li>
+									<li><a href="#exp-3" style="padding-left: 2rem;">3.3 Verifying Emotion and Style Controllability</a></li>
+									<li><a href="#exp-4" style="padding-left: 2rem;">3.4 Examples of Generating Empathetic Captions Using CSS-EmCap</a></li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</div> -->
+				<!-- ///////// -->
+				
+								
+				<div class="section"><a name="abstract"></a>
+					<div class="section-title">1. ABSTRACT</div>
+					<div class="section-content abstract">
+						Conversational Speech Synthesis (CSS) is a key task in the user-agent interaction area, aiming to generate more expressive and empathetic speech for users. 
+						However, it is well-known that “listening” and “gazing” play crucial roles in conveying emotions during real-world interpersonal communication.
+						Existing CSS research is limited to perceiving only text and speech within the dialogue context, which restricts its effectiveness. Moreover, speech-only responses further constrain the interactive experience. 
+						To address these limitations, we introduce a Conversational Speech-Visual Synthesis (CSVS) task as an extension of traditional CSS.
+						By leveraging multimodal dialogue context, it provides users with coherent audiovisual responses. To this end, we develop a CSVS system named <b>UniTalker</b>, which is a unified model that seamlessly integrates multimodal perception and multimodal rendering capabilities. 
+						Specifically, it leverages a large-scale language model to comprehensively understand multimodal cues in the dialogue context, including speaker, text, speech, and the talking-face animations. 
+						After that, it employs multi-task sequence prediction to first infer the target utterance's emotion and then generate empathetic speech and natural talking-face animations. 
+						To ensure that the generated speech-visual content remains consistent in terms of emotion, content, and duration, we introduce three key optimizations:
+						1) Designing a specialized neural landmark codec to tokenize and reconstruct facial expression sequences.
+						2) Proposing a bimodal speech-visual hard alignment decoding strategy.
+						3) Applying emotion-guided rendering during the generation stage.
+						Comprehensive objective and subjective experiments demonstrate that our model synthesizes more empathetic speech and provides users with more natural and emotionally consistent talking-face animations. 
+						The source code and generated samples are available at: <a href="https://github.com/UniTalker/UniTalker">https://github.com/UniTalker/UniTalker</a>. 
+					</div> 
+				</div>
+				
+				<div class="section"><a name="Method"></a>
+					<div class="section-title">2. METHOD</div>
+					<div class="section-content method_image">
+						<img style="width: 100%;" src="./img/model.png"/>
+					</div> 
+				</div>
+				
+				<div class="section"><a name="Synthesized samples"></a>
+					<div class="section-title"><a name="3"></a>3. SAMPLES</div>
+					
+					<!-- ///////////////////// exp-1 ///////////////////// -->
+					<a name="exp-1"></a>
+					<div class="section-content">
+						<div class="subsection-title"><a name="3"></a>3.1 Samples synthesized by UniTalker in CSVS task.</div>
+					</div>
+					
+					<!-- sample 1 -->
+					<div class="section-content">
+						<div class="subsection-exp-1">
+							<div class="module-title"><strong>Sample #1:</strong></div>
+							
+			
+							<div class="module-content">
+								<table class="table-sample">
+								  <thead>
+									<tr>
+										<th colspan="3" style="text-align: center"><strong>Dialogue History </br> (Ground Truth)</strong></th>
+										<th colspan="1" style="text-align: center"><strong>Current Utterance </br> (UniTalker Generated)</strong></th>
+									</tr>
+								  </thead>
+								  <tbody>
+									<tr>
+										<td style="text-align: center">Speaker A: Hi there, do you watch the NFL?</td>
+										<td style="text-align: center">Speaker B: I love watching the NFL, how about you?</td>
+										<td style="text-align: center">Speaker A: Yes me too. Did you know U of Iowa painted their visitor locker room pink?</td>
+										<td style="text-align: center">Speaker B: Yes I do, I live down the street from the stadium! Ever been to a game there?</td>
+									</tr>
+									<tr>
+										<td style="text-align: left"><video width="320" height="240" src="static/exp-1/D1/D1-1-w.mp4" controls title="Sample Video"></video></td>
+										<td style="text-align: left"><video width="320" height="240" src="static/exp-1/D1/D1-2-m.mp4" controls title="Sample Video"></video></td>
+										<td style="text-align: left"><video width="320" height="240" src="static/exp-1/D1/D1-3-w.mp4" controls title="Sample Video"></video></td>
+										<td style="text-align: left"><video width="320" height="240" src="static/exp-1/D1/video.mp4" controls title="Sample Video"></video></td>
+									</tr>
+								  </tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					
+					
+					<!-- sample 2 -->
+					<div class="section-content">
+						<div class="subsection-exp-1">
+							<div class="module-title"><strong>Sample #2:</strong></div>
+							
+								
+							<div class="module-content">
+								<table class="table-sample">
+								  <thead>
+									<tr>
+										<th colspan="3" style="text-align: center"><strong>Dialogue History </br> (Ground Truth)</strong></th>
+										<th colspan="1" style="text-align: center"><strong>Current Utterance </br> (UniTalker Generated)</strong></th>
+									</tr>
+								  </thead>
+								  <tbody>
+									<tr>
+										<td style="text-align: center">Speaker A: I do but i don't get the chance as much anymore. The patriots are on a role.</td>
+										<td style="text-align: center">Speaker B: Do you know how many teams are on the NFL?</td>
+										<td style="text-align: center">Speaker A: Wow that's a good question, how many?</td>
+										<td style="text-align: center">Speaker B: Did you know that the former running back, Benjarvis Green-Ellis has never fumbled the football in his whole NFL career?</td>
+									</tr>
+									<tr>
+										<td style="text-align: left"><video width="320" height="240" src="static/exp-1/D3/D3-1-m.mp4" controls title="Sample Video"></video></td>
+										<td style="text-align: left"><video width="320" height="240" src="static/exp-1/D3/D3-2-w.mp4" controls title="Sample Video"></video></td>
+										<td style="text-align: left"><video width="320" height="240" src="static/exp-1/D3/D3-3-m.mp4" controls title="Sample Video"></video></td>
+										<td style="text-align: left"><video width="320" height="240" src="static/exp-1/D3/video.mp4" controls title="Sample Video"></video></td>
+									</tr>
+								  </tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					
+					
+					<!-- sample 3 -->
+					<div class="section-content">
+						<div class="subsection-exp-1">
+							<div class="module-title"><strong>Sample #3:</strong></div>
+							
+								
+							<div class="module-content">
+								<table class="table-sample">
+								  <thead>
+									<tr>
+										<th colspan="3" style="text-align: center"><strong>Dialogue History </br> (Ground Truth)</strong></th>
+										<th colspan="1" style="text-align: center"><strong>Current Utterance </br> (UniTalker Generated)</strong></th>
+									</tr>
+								  </thead>
+								  <tbody>
+									<tr>
+										<td style="text-align: center">Speaker A: Yeah i believe it was twice as much. ESPN won an Emmy for the superimposed line for the first downs.</td>
+										<td style="text-align: center">Speaker B: Did you know that an average lifetime earning of an engineer is higher than the average lifetime earning of an NFL player and an average MLB player?</td>
+										<td style="text-align: center">Speaker A: Yes that's an extremely high scoring game. No I did not know that! Did you know that in the 1960's top bowlers made twice as much as top football stars?</td>
+										<td style="text-align: center">Speaker B: Yeah i believe it was twice as much. ESPN won an Emmy for the superimposed line for the first downs.</td>
+									</tr>
+									<tr>
+										<td style="text-align: left"><video width="320" height="240" src="static/exp-1/D4/D4-1-w.mp4" controls title="Sample Video"></video></td>
+										<td style="text-align: left"><video width="320" height="240" src="static/exp-1/D4/D4-2-m.mp4" controls title="Sample Video"></video></td>
+										<td style="text-align: left"><video width="320" height="240" src="static/exp-1/D4/D4-3-w.mp4" controls title="Sample Video"></video></td>
+										<td style="text-align: left"><video width="320" height="240" src="static/exp-1/D4/video.mp4" controls title="Sample Video"></video></td>
+									</tr>
+								  </tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					
+					
+					<!-- sample 4 -->
+					<div class="section-content">
+						<div class="subsection-exp-1">
+							<div class="module-title"><strong>Sample #4:</strong></div>
+							
+								
+							<div class="module-content">
+								<table class="table-sample">
+								  <thead>
+									<tr>
+										<th colspan="3" style="text-align: center"><strong>Dialogue History </br> (Ground Truth)</strong></th>
+										<th colspan="1" style="text-align: center"><strong>Current Utterance </br> (UniTalker Generated)</strong></th>
+									</tr>
+								  </thead>
+								  <tbody>
+									<tr>
+										<td style="text-align: center">Speaker A: Definately! It pays more to be an engineer than an average NFL or MLB player because over a lifetime an engineer ears more than those players.</td>
+										<td style="text-align: center">Speaker B: Well engineers work for a longer time, so it makes sense, did you hear about QB Alex Smith? I think his a great role model to follow.</td>
+										<td style="text-align: center">Speaker A: I didn't hear. What did he do?</td>
+										<td style="text-align: center">Speaker B: He took ap test in high school and entered university as a ujunior. he received a degree in just two years and then began working on a masters degree.</td>
+									</tr>
+									<tr>
+										<td style="text-align: left"><video width="320" height="240" src="static/exp-1/D5/D5-1-w.mp4" controls title="Sample Video"></video></td>
+										<td style="text-align: left"><video width="320" height="240" src="static/exp-1/D5/D5-2-m.mp4" controls title="Sample Video"></video></td>
+										<td style="text-align: left"><video width="320" height="240" src="static/exp-1/D5/D5-3-w.mp4" controls title="Sample Video"></video></td>
+										<td style="text-align: left"><video width="320" height="240" src="static/exp-1/D5/video.mp4" controls title="Sample Video"></video></td>
+									</tr>
+								  </tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					
+					
+					<!-- sample 5 -->
+					<div class="section-content">
+						<div class="subsection-exp-1">
+							<div class="module-title"><strong>Sample #5:</strong></div>
+							
+								
+							<div class="module-content">
+								<table class="table-sample">
+								  <thead>
+									<tr>
+										<th colspan="3" style="text-align: center"><strong>Dialogue History </br> (Ground Truth)</strong></th>
+										<th colspan="1" style="text-align: center"><strong>Current Utterance </br> (UniTalker Generated)</strong></th>
+									</tr>
+								  </thead>
+								  <tbody>
+									<tr>
+										<td style="text-align: center">Speaker A: Oh yeah, those can be good positions, I guess it can happen some day.</td>
+										<td style="text-align: center">Speaker B: I'm sure if they do they will have tracking chips on their shoulder pads like they do now so they can record every move on the field.</td>
+										<td style="text-align: center">Speaker A: That seems bit invasive but I guess all kinds of stats are taken out of those chips.</td>
+										<td style="text-align: center">Speaker B: Yes.  They even have chips in the footballs to track velocity. Getting a little too technical I think for a sport.</td>
+									</tr>
+									<tr>
+										<td style="text-align: left"><video width="320" height="240" src="static/exp-1/D6/D6-1-m.mp4" controls title="Sample Video"></video></td>
+										<td style="text-align: left"><video width="320" height="240" src="static/exp-1/D6/D6-2-w.mp4" controls title="Sample Video"></video></td>
+										<td style="text-align: left"><video width="320" height="240" src="static/exp-1/D6/D6-3-m.mp4" controls title="Sample Video"></video></td>
+										<td style="text-align: left"><video width="320" height="240" src="static/exp-1/D6/video.mp4" controls title="Sample Video"></video></td>
+									</tr>
+								  </tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					
+					
+					<!-- sample 6 -->
+					<div class="section-content">
+						<div class="subsection-exp-1">
+							<div class="module-title"><strong>Sample #6:</strong></div>
+							
+								
+							<div class="module-content">
+								<table class="table-sample">
+								  <thead>
+									<tr>
+										<th colspan="3" style="text-align: center"><strong>Dialogue History </br> (Ground Truth)</strong></th>
+										<th colspan="1" style="text-align: center"><strong>Current Utterance </br> (UniTalker Generated)</strong></th>
+									</tr>
+								  </thead>
+								  <tbody>
+									<tr>
+										<td style="text-align: center">Speaker A: I do, I play a fantasy football game, what about you?</td>
+										<td style="text-align: center">Speaker B: I love playing fantasy football.  Have played for bout 17 or 18 years now.  Did you know that they even have a fantasy league for congress?</td>
+										<td style="text-align: center">Speaker A: I dont really know that but I do know a bit about players QB Macus Mariona is a bad choice, one of the worst QBs in the season.</td>
+										<td style="text-align: center">Speaker B: I agree. I kind of thought he was a little overrated when he was drafted.</td>
+									</tr>
+									<tr>
+										<td style="text-align: left"><video width="320" height="240" src="static/exp-1/D7/D7-1-m.mp4" controls title="Sample Video"></video></td>
+										<td style="text-align: left"><video width="320" height="240" src="static/exp-1/D7/D7-2-w.mp4" controls title="Sample Video"></video></td>
+										<td style="text-align: left"><video width="320" height="240" src="static/exp-1/D7/D7-3-m.mp4" controls title="Sample Video"></video></td>
+										<td style="text-align: left"><video width="320" height="240" src="static/exp-1/D7/video.mp4" controls title="Sample Video"></video></td>
+									</tr>
+								  </tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					
+					<!-- sample 7 -->
+					<div class="section-content">
+						<div class="subsection-exp-1">
+							<div class="module-title"><strong>Sample #7:</strong></div>
+							
+								
+							<div class="module-content">
+								<table class="table-sample">
+								  <thead>
+									<tr>
+										<th colspan="3" style="text-align: center"><strong>Dialogue History </br> (Ground Truth)</strong></th>
+										<th colspan="1" style="text-align: center"><strong>Current Utterance </br> (UniTalker Generated)</strong></th>
+									</tr>
+								  </thead>
+								  <tbody>
+									<tr>
+										<td style="text-align: center">Speaker A: Hi, how are you? How much do you know about the Bible?</td>
+										<td style="text-align: center">Speaker B: Yes I do. It the best selling book of all time.</td>
+										<td style="text-align: center">Speaker A: Did you know that before 1963, it was not uncommon for American students to be required to read from the Bible as part of their elementary education? Times certainly have changed!</td>
+										<td style="text-align: center">Speaker B: My mom told me that Thomas jefferson did not believe in miracles and the resurrection.</td>
+									</tr>
+									<tr>
+										<td style="text-align: left"><video width="320" height="240" src="static/exp-1/D8/D8-1-w.mp4" controls title="Sample Video"></video></td>
+										<td style="text-align: left"><video width="320" height="240" src="static/exp-1/D8/D8-2-m.mp4" controls title="Sample Video"></video></td>
+										<td style="text-align: left"><video width="320" height="240" src="static/exp-1/D8/D8-3-w.mp4" controls title="Sample Video"></video></td>
+										<td style="text-align: left"><video width="320" height="240" src="static/exp-1/D8/video.mp4" controls title="Sample Video"></video></td>
+									</tr>
+								  </tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					
+					
+					
+					<!-- /////////////////////-exp-2-////////////////////// -->
+					<a name="exp-2"></a>
+					<div class="section-content">
+						<div class="subsection-title"><a name="2"></a>3.2 Talking-face animations with different emotions generated by UniTalker.</div>
+					</div>
+					<div class="section-content">
+						<div class="subsection-exp-1">
+							<div class="module-title"><strong>Sample #1:</strong></div>
+							<div class="module-content">
+								<table class="table-sample">
+								  <thead>
+									<tr>
+										<th colspan="6" style="text-align: center"><strong>UniTalker Generated</strong></th>
+									</tr>
+								  </thead>
+								  <tbody>
+									<tr>
+										<td style="text-align: center">Happy</td>
+										<td style="text-align: center">Angry</td>
+										<td style="text-align: center">Sadness</td>
+										<td style="text-align: center">Disgust</td>
+										<td style="text-align: center">Fear</td>
+										<td style="text-align: center">Surprise</td>
+									</tr>
+									<tr>
+										<td style="text-align: left"><video width="320" height="240" src="static/exp-2/demo-1/happy-1-M007.mp4" controls title="Sample Video"></video></td>
+										<td style="text-align: left"><video width="320" height="240" src="static/exp-2/demo-1/angry-1-M007.mp4" controls title="Sample Video"></video></td>
+										<td style="text-align: left"><video width="320" height="240" src="static/exp-2/demo-1/sad-1-M007.mp4" controls title="Sample Video"></video></td>
+										<td style="text-align: left"><video width="320" height="240" src="static/exp-2/demo-1/disgusted-1-M007.mp4" controls title="Sample Video"></video></td>
+										<td style="text-align: left"><video width="320" height="240" src="static/exp-2/demo-1/fear-1-M007.mp4" controls title="Sample Video"></video></td>
+										<td style="text-align: left"><video width="320" height="240" src="static/exp-2/demo-1/surprised-1-M007.mp4" controls title="Sample Video"></video></td>
+								    </tr>
+								  </tbody>
+								</table>
+							</div>
+						</div>
+						
+						
+						<div class="subsection-exp-1">
+							<div class="module-title"><strong>Sample #2:</strong></div>
+							<div class="module-content">
+								<table class="table-sample">
+									<thead>
+										<tr>
+											<th colspan="6" style="text-align: center"><strong>UniTalker Generated</strong></th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td style="text-align: center">Happy</td>
+											<td style="text-align: center">Angry</td>
+											<td style="text-align: center">Sadness</td>
+											<td style="text-align: center">Disgust</td>
+											<td style="text-align: center">Fear</td>
+											<td style="text-align: center">Surprise</td>
+										</tr>
+										<tr>
+											<td style="text-align: left"><video width="320" height="240" src="static/exp-2/demo-2/happy-1-W011.mp4" controls title="Sample Video"></video></td>
+											<td style="text-align: left"><video width="320" height="240" src="static/exp-2/demo-2/angry-1-W011.mp4" controls title="Sample Video"></video></td>
+											<td style="text-align: left"><video width="320" height="240" src="static/exp-2/demo-2/sad-1-W011.mp4" controls title="Sample Video"></video></td>
+											<td style="text-align: left"><video width="320" height="240" src="static/exp-2/demo-2/disgusted-1-W011.mp4" controls title="Sample Video"></video></td>
+											<td style="text-align: left"><video width="320" height="240" src="static/exp-2/demo-2/fear-1-W011.mp4" controls title="Sample Video"></video></td>
+											<td style="text-align: left"><video width="320" height="240" src="static/exp-2/demo-2/surprised-001-W011.mp4" controls title="Sample Video"></video></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+						
+						
+					</div>
+					
+					
+					<!-- /////////////////////-exp-3-////////////////////// -->
+					<a name="exp-3"></a>
+					<div class="section-content">
+						<div class="subsection-title"><a name="3"></a>3.3 Talking-face animations of unseen speakers generated by UniTalker.</div>
+					</div>
+					
+					<div class="section-content">
+						<div class="subsection-exp-1">
+							<div class="module-content">
+								<table class="table-sample">
+								  <tbody>
+									<tr>
+									  	<td colspan="6" style="text-align: center">Reference Speech</td>
+									</tr>
+									<tr>
+									  	<td colspan="3" style="text-align: center"><audio src="static/exp-3/0_1_d0.wav" controls="" preload=""></audio></td>
+									  	<td colspan=3"" style="text-align: center"><audio src="static/exp-3/3_0_d0.wav" controls="" preload=""></audio></td>
+									</tr>
+									
+									<tr>
+										<td colspan="6" style="text-align: center">Reference Poritrait</td>
+									</tr>
+					
+									<tr>
+										<td style="text-align: center"><img src="static/exp-3/1.png"/></td>
+										<td style="text-align: center"><img src="static/exp-3/2.png"/></td>
+										<td style="text-align: center"><img src="static/exp-3/3.png"/></td>
+										<td style="text-align: center"><img src="static/exp-3/4.png"/></td>
+										<td style="text-align: center"><img src="static/exp-3/5.png"/></td>
+										<td style="text-align: center"><img src="static/exp-3/6.png"/></td>
+									</tr>
+									<tr>
+										<td colspan="6" style="text-align: center">UniTalker Generated</td>
+									</tr>
+									<tr>
+										<td style="text-align: left"><video width="320" height="240" src="static/exp-3/1.mp4" controls title="Sample Video"></video></td>
+										<td style="text-align: left"><video width="320" height="240" src="static/exp-3/2.mp4" controls title="Sample Video"></video></td>
+										<td style="text-align: left"><video width="320" height="240" src="static/exp-3/3.mp4" controls title="Sample Video"></video></td>
+										<td style="text-align: left"><video width="320" height="240" src="static/exp-3/4.mp4" controls title="Sample Video"></video></td>
+										<td style="text-align: left"><video width="320" height="240" src="static/exp-3/5.mp4" controls title="Sample Video"></video></td>
+										<td style="text-align: left"><video width="320" height="240" src="static/exp-3/6.mp4" controls title="Sample Video"></video></td>
+									</tr>
+									
+								  </tbody>
+								</table>
+							</div>
+						</div>
+						
+					</div>
+					
+					
+
+				</div>
+			</div>
+		</div>
+		
+		
+	</body>
+</html>
